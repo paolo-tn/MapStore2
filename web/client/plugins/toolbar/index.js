@@ -17,6 +17,9 @@ const {toggleControl} = require('../../actions/controls');
 const {changeLayerProperties, toggleNode, sortNode} = require('../../actions/layers');
 const {onCreateSnapshot, changeSnapshotState, saveImage} = require('../../actions/snapshot');
 
+//WIP
+const {doReverseGeocoding,changeState} = require('../../actions/reverseGeocoder');
+
 const {mapSelector} = require('../../selectors/map');
 const {layersSelector, groupsSelector} = require('../../selectors/layers');
 
@@ -48,6 +51,14 @@ const tocSelector = createSelector(
         groups
     })
 );
+
+
+//WIP
+const RevGeo= connect((state) => ({
+    pressed: false
+}), {
+    onClick: changeState
+})(require('./ReverseGeocoder'));
 
 const TOC = connect(tocSelector, {
     propertiesChangeHandler: changeLayerProperties,
@@ -112,6 +123,8 @@ const HelpToggleBtn = connect((state) => ({
 
 const layersIcon = require('./assets/img/layers.png');
 const lineRuleIcon = require('./assets/img/line-ruler.png');
+
+
 
 module.exports = [{
     name: 'home',
@@ -199,4 +212,17 @@ module.exports = [{
 }, {
     name: 'help',
     tool: HelpToggleBtn
-}];
+},
+    {
+     name: 'RevGeocoder',
+     tool: RevGeo,
+     props: {
+        isPanel: false,
+        icon: <Glyphicon glyph="search"/>,
+        buttonTooltip: <Message msgId="search" />,
+     }
+
+    }
+
+
+];
