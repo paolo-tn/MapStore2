@@ -6,11 +6,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+var axios = require('axios');
+
 //admittable states
 const CHANGE_REV_GEOCODER_STATE = 'CHANGE_REV_GEOCODER_STATE';
 const NEW_REV_GEOCODING_REQ = 'NEW_REV_GEOCODING_REQ';
 const LOAD_RESULTS = 'LOAD_RESULTS';
 const ERROR_REV_GEOCODING = 'ERROR_REV_GEOCODING';
+
 
 
 
@@ -41,7 +44,20 @@ function loadResults(data){
  * @param enabled
  * @returns {{type: string, enabled: *}}
  */
-function changeState(enabled){
+function onClick(enabled){
+    console.log("in action.onClick");
+
+    //JUST FOR MOCK DO THE CALL HERE!
+    axios.get('http://nominatim.openstreetmap.org/reverse?json_callback=cb&format=json&lat=-23.56320001&lon=-46.66140002&zoom=27&addressdetails=1').then((response) => {
+        if (response.data) {
+            console.log(response);
+        } else {
+            console.log(error);
+        }
+    }).catch((e) => {
+            console.log(e);
+    });
+
     return {
         type: CHANGE_REV_GEOCODER_STATE,
         enabled: enabled
@@ -78,6 +94,6 @@ module.exports = {
     CHANGE_REV_GEOCODER_STATE,
     LOAD_RESULTS,
     ERROR_REV_GEOCODING,
-    changeState,
+    onClick,
     doReverseGeocoding
 };

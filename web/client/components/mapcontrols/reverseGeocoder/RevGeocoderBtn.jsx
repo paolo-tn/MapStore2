@@ -19,7 +19,7 @@ let RevGeocoderButton = React.createClass({
         key: React.PropTypes.string,
         isButton: React.PropTypes.bool,
         glyphicon: React.PropTypes.string,
-        changeState: React.PropTypes.func,
+        onClick: React.PropTypes.func,
         pressed: React.PropTypes.bool
 
 
@@ -34,8 +34,8 @@ let RevGeocoderButton = React.createClass({
     },
     onClick: function() {
         console.log(this.props.pressed);
-        //ERROR IS NOT A FUNCTION ??
-        this.props.changeState(!this.props.pressed);
+
+        this.props.onClick(!this.props.pressed);
     },
 
 
