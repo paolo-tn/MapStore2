@@ -37,6 +37,7 @@ module.exports = (plugins) => {
         search: require('../../reducers/search').searchResults,
         measurement: require('../../reducers/measurement'),
         snapshot: require('../../reducers/snapshot'),
+        reverseGeocoder: require('../../reducers/reverseGeocoder'),
         map: () => {return null; },
         layers: () => {return null; },
         ...pluginsReducers

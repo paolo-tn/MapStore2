@@ -19,10 +19,13 @@ const assign = require('object-assign');
 function reverseGeocode(state = null, action) {
     switch (action.type) {
         case CHANGE_REV_GEOCODER_STATE:
+            console.log("CHANGE_REV_GEOCODER_STATE");
             return assign({}, state, {
                 enabled: action.enabled
             });
         case CLICK_ON_MAP:
+            console.log("CLICK_ON_MAP");
+            console.log(action.point);
             return assign({}, state, {
                 point: action.point
             });

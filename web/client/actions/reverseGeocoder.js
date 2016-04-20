@@ -47,7 +47,7 @@ function loadResults(data){
 function onClick(enabled){
     console.log("in action.onClick");
 
-    //JUST FOR MOCK DO THE CALL HERE!
+    /*JUST FOR MOCK DO THE CALL HERE!
     axios.get('http://nominatim.openstreetmap.org/reverse?json_callback=cb&format=json&lat=-23.56320001&lon=-46.66140002&zoom=27&addressdetails=1').then((response) => {
         if (response.data) {
             console.log(response);
@@ -57,7 +57,7 @@ function onClick(enabled){
     }).catch((e) => {
             console.log(e);
     });
-
+   */
     return {
         type: CHANGE_REV_GEOCODER_STATE,
         enabled: enabled

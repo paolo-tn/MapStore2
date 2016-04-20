@@ -95,6 +95,13 @@ const HelpTextPanel = connect((state) => ({
 const layersIcon = require('./assets/img/layers.png');
 const lineRuleIcon = require('./assets/img/line-ruler.png');
 
+const {doReverseGeocoding,onClick} = require('../../actions/reverseGeocoder');
+const RevGeo= connect((state) => ({
+    pressed: false
+}), {
+    onClick: onClick
+})(require('../../components/mapcontrols/reverseGeocoder/RevGeocoderBtn.jsx'));
+
 module.exports = (context) => ([{
     name: 'home',
     tooltip: "gohome",
@@ -170,4 +177,14 @@ module.exports = (context) => ([{
     tooltip: "help",
     toggle: true,
     panel: HelpTextPanel
-}]);
+},
+    {
+    name: 'RevGeocoder',
+    tool: RevGeo,
+    tooltip: "settings",
+    props: {
+        isPanel: false,
+        icon: <Glyphicon glyph="search"/>,
+        buttonTooltip: <Message msgId="settings" />
+    }
+    }]);
