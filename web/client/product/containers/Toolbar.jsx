@@ -22,6 +22,8 @@ const {changeLocateState} = require('../../actions/locate');
 const {changeMapInfoState} = require('../../actions/mapInfo');
 const {changeLayerProperties, toggleNode, sortNode} = require('../../actions/layers');
 const {changeMeasurementState} = require('../../actions/measurement');
+const {onClick} = require('../../actions/reverseGeocoder');
+
 
 const Message = require('../../components/I18N/Message');
 
@@ -51,6 +53,16 @@ const Info = connect((state) => ({
 }), {
     onClick: changeMapInfoState
 })(require('../../components/buttons/ToggleButton'));
+
+
+
+
+const RevGeocoderBtn= connect((state) => ({
+    point:state.point
+}), {
+    onClick : onClick
+})(require('../../../components/mapcontrols/reverseGeocoder/RevGeocoderBtn'));
+
 
 const layersIcon = require('../assets/img/layers.png');
 const lineRuleIcon = require('../assets/img/line-ruler.png');
@@ -193,6 +205,13 @@ const Toolbar = React.createClass({
                     icon={<Glyphicon glyph="cog"/>}
                     />
                 <HelpToggleBtn key="help"/>
+                <RevGeocoderBtn
+                    isPanel={true}
+                    buttonTooltip={<Message msgId="settings" />}
+                    helpText={<Message msgId="helptexts.settingsPanel"/>}
+                    icon={<Glyphicon glyph="camera"/>}
+                />
+
             </MapToolBar>
         );
     }

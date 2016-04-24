@@ -10,6 +10,8 @@
 var React = require('react');
 var ToggleButton = require('../../buttons/ToggleButton');
 require("./reverseGeocoder.css");
+const {clickOnMap} = require('../../../actions/map.js');
+
 
 /**
  * A toggle button class for enabling a reverse geocoder request
@@ -19,10 +21,14 @@ let RevGeocoderButton = React.createClass({
         key: React.PropTypes.string,
         isButton: React.PropTypes.bool,
         glyphicon: React.PropTypes.string,
-        onClick: React.PropTypes.func,
-        pressed: React.PropTypes.bool
+        onClick: React.PropTypes.func
+    },
 
-
+    getInitialState(){
+        return {
+            pressed: false,
+            point : {}
+        }
     },
 
     getDefaultProps() {
@@ -30,12 +36,13 @@ let RevGeocoderButton = React.createClass({
             key: 'ReverseGeocoderButton',
             isButton: true,
             glyphicon: 'search'
+
         };
     },
     onClick: function() {
-        console.log(this.props.pressed);
+        this.state.pressed = !this.state.pressed;
 
-        this.props.onClick(!this.props.pressed);
+        this.props.onClick(this.state.pressed);
     },
 
 
@@ -48,7 +55,20 @@ let RevGeocoderButton = React.createClass({
                 pressed={this.props.pressed}
                 onClick={this.onClick}/>
         );
+    },
+
+    componentWillReceiveProps: function (newProps){
+
+       console.log("revgeocoderbtn received props:",newProps) ;
+    },
+
+    shouldComponentUpdate: function(nextProps, nextState) {
+        console.log("component should update");
+        return this.props.value !== nextProps.value;
+
     }
+
+
 });
 
 module.exports = RevGeocoderButton;

@@ -9,10 +9,11 @@
 var axios = require('axios');
 
 //admittable states
-const CHANGE_REV_GEOCODER_STATE = 'CHANGE_REV_GEOCODER_STATE';
-const NEW_REV_GEOCODING_REQ = 'NEW_REV_GEOCODING_REQ';
-const LOAD_RESULTS = 'LOAD_RESULTS';
-const ERROR_REV_GEOCODING = 'ERROR_REV_GEOCODING';
+const REV_GEOCODER_READY     = 'REV_GEOCODER_READY';
+const REV_GEOCODER_DISABLED  = 'REV_GEOCODER_DISABLED';
+const REV_GEOCODING_REQUEST  = 'REV_GEOCODING_REQUEST';
+const REV_GEOCODING_RESPONSE = 'REV_GEOCODING_RESPONSE';
+const REV_GEOCODING_ERROR    = 'REV_GEOCODING_ERROR';
 
 
 
@@ -21,7 +22,7 @@ const ERROR_REV_GEOCODING = 'ERROR_REV_GEOCODING';
 function error(){
     console.log("error while reverse geocoding");
     return {
-        type: ERROR_REV_GEOCODING
+        type: REV_GEOCODING_ERROR
     }
 }
 
@@ -29,7 +30,7 @@ function error(){
 function loadResults(data){
     console.log("loading results");
     return {
-        type: LOAD_RESULTS,
+        type: REV_GEOCODING_RESPONSE,
         data: data
     }
 }
@@ -45,23 +46,17 @@ function loadResults(data){
  * @returns {{type: string, enabled: *}}
  */
 function onClick(enabled){
-    console.log("in action.onClick");
+    console.log("action says: enabled is",enabled);
 
-    /*JUST FOR MOCK DO THE CALL HERE!
-    axios.get('http://nominatim.openstreetmap.org/reverse?json_callback=cb&format=json&lat=-23.56320001&lon=-46.66140002&zoom=27&addressdetails=1').then((response) => {
-        if (response.data) {
-            console.log(response);
-        } else {
-            console.log(error);
+    if(!enabled == true){
+        return {
+            type: REV_GEOCODER_DISABLED
         }
-    }).catch((e) => {
-            console.log(e);
-    });
-   */
-    return {
-        type: CHANGE_REV_GEOCODER_STATE,
-        enabled: enabled
-    };
+    }else{
+        return {
+            type: REV_GEOCODER_READY
+        }
+    }
 }
 
 /**
@@ -73,7 +68,7 @@ function doReverseGeocoding(req){
     request = req;
 
     return (dispatch) => {
-        //dispatch(newMapInfoRequest(reqId, param));
+        dispatch(newMapInfoRequest(reqId, param));
         //MOCK
         axios.get('http://nominatim.openstreetmap.org/reverse?json_callback=cb&format=json&lat=-23.56320001&lon=-46.66140002&zoom=27&addressdetails=1').then((response) => {
             if (response.data) {
@@ -90,10 +85,11 @@ function doReverseGeocoding(req){
 
 
 module.exports = {
-    NEW_REV_GEOCODING_REQ,
-    CHANGE_REV_GEOCODER_STATE,
-    LOAD_RESULTS,
-    ERROR_REV_GEOCODING,
+    REV_GEOCODER_READY,
+    REV_GEOCODER_DISABLED,
+    REV_GEOCODING_REQUEST,
+    REV_GEOCODING_RESPONSE,
+    REV_GEOCODING_ERROR,
     onClick,
     doReverseGeocoding
 };

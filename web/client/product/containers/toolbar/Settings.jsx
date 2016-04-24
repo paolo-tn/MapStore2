@@ -34,6 +34,7 @@ const MousePositionButton = connect((state) => ({
     onClick: changeMousePositionState
 })(require('../../../components/buttons/ToggleButton'));
 
+
 const FeatureInfoFormatSelector = connect((state) => ({
     infoFormat: state.mapInfo && state.mapInfo.infoFormat
 }), {

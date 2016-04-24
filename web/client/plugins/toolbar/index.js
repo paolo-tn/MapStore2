@@ -96,11 +96,13 @@ const layersIcon = require('./assets/img/layers.png');
 const lineRuleIcon = require('./assets/img/line-ruler.png');
 
 const {doReverseGeocoding,onClick} = require('../../actions/reverseGeocoder');
+
 const RevGeo= connect((state) => ({
-    pressed: false
+    pressed: state.pressed,
+    point : state.point
 }), {
     onClick: onClick
-})(require('../../components/mapcontrols/reverseGeocoder/RevGeocoderBtn.jsx'));
+})(require('../../components/mapcontrols/reverseGeocoder/RevGeocoderBtn'));
 
 module.exports = (context) => ([{
     name: 'home',
@@ -181,10 +183,10 @@ module.exports = (context) => ([{
     {
     name: 'RevGeocoder',
     tool: RevGeo,
-    tooltip: "settings",
+    tooltip: "helptexts.infoButton",
     props: {
         isPanel: false,
         icon: <Glyphicon glyph="search"/>,
-        buttonTooltip: <Message msgId="settings" />
+        buttonTooltip: <Message msgId="helptexts.infoButton" />
     }
     }]);
